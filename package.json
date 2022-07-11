@@ -1,0 +1,37 @@
+{
+  "name": "khbirthday",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
+  },
+  "dependencies": {
+    "@eva-design/eva": "^2.1.1",
+    "@react-navigation/bottom-tabs": "^6.3.2",
+    "@react-navigation/stack": "^6.2.2",
+    "@ui-kitten/components": "^5.1.2",
+    "@ui-kitten/eva-icons": "^5.1.2",
+    "expo": "~45.0.0",
+    "expo-secure-store": "~11.2.0",
+    "expo-status-bar": "~1.3.0",
+    "moment": "^2.29.4",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-native": "0.68.2",
+    "react-native-action-button": "^2.8.5",
+    "react-native-gesture-handler": "~2.2.1",
+    "react-native-svg": "12.3.0",
+    "react-native-toast-notifications": "^3.3.0",
+    "react-native-web": "0.17.7",
+    "react-native-webview": "^11.22.5",
+    "react-navigation": "^4.4.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9"
+  },
+  "private": true
+}
