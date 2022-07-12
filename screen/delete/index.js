@@ -2,7 +2,6 @@ import { React, useState, useEffect, useRef } from 'react';
 import { TouchableOpacity, Keyboard, View, Dimensions } from 'react-native';
 import styles from './theme/styles';
 import { Card, Layout, Text, Input, Icon, Modal, SelectItem } from '@ui-kitten/components';
-// import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useToast } from "react-native-toast-notifications";
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
@@ -35,18 +34,15 @@ const DeleteScreen = ({route, navigation}) => {
     }, []);
 
     const save = async(key, value) => {
-        // SecureStore.setItemAsync(key, value);
         AsyncStorage.setItem(key, value);
     }
 
     const remove = async(key) => {
         AsyncStorage.removeItem(key);
-        // SecureStore.deleteItemAsync(key);
     }
 
     const load = async(key) => {
         return AsyncStorage.getItem(key);
-        // return SecureStore.getItemAsync(key);
     }
 
     const submitHandler = () => {

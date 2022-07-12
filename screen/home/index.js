@@ -129,13 +129,7 @@ const HomeScreen = ({route, navigation}) => {
     }, []);
 
     const testFunction = async() => {
-        Notifications.registerRemoteNotifications();
-        // let notification = await Notifications.getInitialNotification();
-
-        // Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
-        //     console.log(`Notification received in foreground: ${notification.title} : ${notification.body}`);
-        //     completion({alert: false, sound: false, badge: false});
-        // });
+       console.log(`test for notification`);
     }
 
     return (

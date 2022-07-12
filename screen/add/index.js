@@ -3,7 +3,6 @@ import { TouchableOpacity, Keyboard, View } from 'react-native';
 // import { WebView } from 'react-native-webview';
 import styles from './theme/styles';
 import { Card, Layout, Text, Input, Calendar, Select, SelectItem, IndexPath, Icon, Button, Modal } from '@ui-kitten/components';
-// import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useToast } from "react-native-toast-notifications";
 
@@ -50,12 +49,10 @@ const AddScreen = ({route, navigation}) => {
     }, []);
 
     const save = async(key, value) => {
-        // SecureStore.setItemAsync(key, value);
         AsyncStorage.setItem(key, value);
     }
 
     const load = async(key) => {
-        // return SecureStore.getItemAsync(key);
         return AsyncStorage.getItem(key);
     }
     
@@ -77,17 +74,6 @@ const AddScreen = ({route, navigation}) => {
                 return true;
         }
         return false;
-        // let count = await load('count');
-        // let countNum = parseInt(count);
-        
-        // for(let i=1; i<=countNum; i++) {
-        //     let entry = await load(i.toString());
-        //     let obj = JSON.parse(entry);
-            
-        //     if (obj.name == staffName)
-        //         return true;
-        // }
-        // return false;
     }
 
     const calendarHandler = () => {
@@ -111,9 +97,6 @@ const AddScreen = ({route, navigation}) => {
                 setDialogState(true);
             }
             else {
-                // let count = await load('count');
-                // let countNum = parseInt(count);
-                // countNum += 1;
                 let key = staffNameRef.current.toLowerCase().replace(' ', '_')
                 
                 // console.log(`{"name": "${staffNameRef.current}", "type": "${selectIndexRef.current}", "date": "${dateRef.current.toDateString()}"}`);
