@@ -5,7 +5,6 @@ import Moment from 'moment';
 import { Layout, Text, Icon, Card } from '@ui-kitten/components';
 import styles from './theme/styles';
 import ActionButton from 'react-native-action-button';
-// import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({route, navigation}) => {
@@ -19,6 +18,8 @@ const HomeScreen = ({route, navigation}) => {
     const [ upcomingName, setUpcomingName ] = useState('None');
     const [ fulltimeCount, setFulltimeCount ] = useState(0);
     const [ internCount, setInternCount ] = useState(0);
+    
+    // Notifications.registerRemoteNotifications();
 
     const refreshData =  async() => {
         let allKeys = await loadAllKeys();
@@ -116,14 +117,26 @@ const HomeScreen = ({route, navigation}) => {
     }
 
     useEffect(() => {
-        // save("1", `{"name": "first", "type": "1", "date": "${new Date().toDateString()}"}`);
+        // save("first", `{"name": "first", "type": "1", "date": "${new Date().toDateString()}"}`);
         refreshData();
-        let setIntervalId = setInterval(refreshData, 1000); // 1 seconds refresh rate
+        const unsubscribe = navigation.addListener('focus', () => {
+            refreshData(); // loaded everytime the page is displayed
+        });
         return () => {
             // Anything in here is fired on component unmount.
-            clearInterval(setIntervalId);
+            unsubscribe;
         }
     }, []);
+
+    const testFunction = async() => {
+        Notifications.registerRemoteNotifications();
+        // let notification = await Notifications.getInitialNotification();
+
+        // Notifications.events().registerNotificationReceivedForeground((notification, completion) => {
+        //     console.log(`Notification received in foreground: ${notification.title} : ${notification.body}`);
+        //     completion({alert: false, sound: false, badge: false});
+        // });
+    }
 
     return (
     <Layout style={styles.container}>
@@ -177,6 +190,9 @@ const HomeScreen = ({route, navigation}) => {
                 </ActionButton.Item>
                 <ActionButton.Item title="Remove entry" buttonColor='#ff3c71' onPress={() => {deleteHandler()}}>
                     <Icon name="trash-2" fill='#ffffff' style={styles.icon}/>
+                </ActionButton.Item>
+                <ActionButton.Item title="Send notification" buttonColor='#000000' onPress={() => {testFunction()}}>
+                    <Icon name="bell" fill='#ffffff' style={styles.icon}/>
                 </ActionButton.Item>
             </ActionButton>
         </Layout>

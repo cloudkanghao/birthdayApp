@@ -5,7 +5,7 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import AppNavigator from './route/stack';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import 'react-native-gesture-handler';
-import { ToastProvider } from 'react-native-toast-notifications'
+import { ToastProvider } from 'react-native-toast-notifications';
 
 export default () => (
   <ToastProvider>
