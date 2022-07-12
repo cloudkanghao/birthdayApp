@@ -3,7 +3,8 @@ import { TouchableOpacity, Keyboard, View } from 'react-native';
 // import { WebView } from 'react-native-webview';
 import styles from './theme/styles';
 import { Card, Layout, Text, Input, Calendar, Select, SelectItem, IndexPath, Icon, Button, Modal } from '@ui-kitten/components';
-import * as SecureStore from 'expo-secure-store';
+// import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useToast } from "react-native-toast-notifications";
 
 const AddScreen = ({route, navigation}) => {
@@ -37,12 +38,11 @@ const AddScreen = ({route, navigation}) => {
 
     useEffect(() => {
         const addStaffOptions = {
-            title: 'Add staff',
+            title: 'Add birthday',
             headerRight: () => (
                 <TouchableOpacity onPress={() => {submitHandler()}}>
                     <Text category='s1' style={styles.headerButton}>Save</Text>
                 </TouchableOpacity>
-                // <Button status='success' onPress={() => submitHandler()}>Save</Button>
             )
         }
         navigation.setOptions(addStaffOptions);
@@ -50,25 +50,44 @@ const AddScreen = ({route, navigation}) => {
     }, []);
 
     const save = async(key, value) => {
-        SecureStore.setItemAsync(key, value);
+        // SecureStore.setItemAsync(key, value);
+        AsyncStorage.setItem(key, value);
     }
 
     const load = async(key) => {
-        return SecureStore.getItemAsync(key);
+        // return SecureStore.getItemAsync(key);
+        return AsyncStorage.getItem(key);
     }
     
+    const loadAllKeys = async() => {
+        return AsyncStorage.getAllKeys();
+    }
+
     const isStaffExist = async(staffName) => {
-        let count = await load('count');
-        let countNum = parseInt(count);
-        
-        for(let i=1; i<=countNum; i++) {
-            let entry = await load(i.toString());
+        let allKeys = await loadAllKeys();
+        let countNum = 0;
+        if (allKeys)
+            countNum = allKeys.length;
+
+        for(let i=0; i<countNum; i++) {
+            let entry = await load(allKeys[i]);
             let obj = JSON.parse(entry);
-            
-            if (obj.name == staffName)
+
+            if (obj.name.toLowerCase() == staffName.toLowerCase())
                 return true;
         }
         return false;
+        // let count = await load('count');
+        // let countNum = parseInt(count);
+        
+        // for(let i=1; i<=countNum; i++) {
+        //     let entry = await load(i.toString());
+        //     let obj = JSON.parse(entry);
+            
+        //     if (obj.name == staffName)
+        //         return true;
+        // }
+        // return false;
     }
 
     const calendarHandler = () => {
@@ -92,13 +111,13 @@ const AddScreen = ({route, navigation}) => {
                 setDialogState(true);
             }
             else {
-                let count = await load('count');
-                let countNum = parseInt(count);
-                countNum += 1;
+                // let count = await load('count');
+                // let countNum = parseInt(count);
+                // countNum += 1;
+                let key = staffNameRef.current.toLowerCase().replace(' ', '_')
                 
                 // console.log(`{"name": "${staffNameRef.current}", "type": "${selectIndexRef.current}", "date": "${dateRef.current.toDateString()}"}`);
-                await save(countNum.toString(), `{"name": "${staffNameRef.current}", "type": "${selectIndexRef.current}", "date": "${dateRef.current.toDateString()}"}`);
-                await save('count', countNum.toString());
+                await save(key, `{"name": "${staffNameRef.current}", "type": "${selectIndexRef.current}", "date": "${dateRef.current.toDateString()}"}`);
                 toast.show(`Staff ${staffNameRef.current} added!`, { animationType: 'zoom-in', duration: 2500 });
                 navigation.goBack();
             }
